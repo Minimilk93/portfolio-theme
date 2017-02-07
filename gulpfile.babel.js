@@ -3,7 +3,6 @@
 import plugins  from 'gulp-load-plugins';
 import yargs    from 'yargs';
 import browser  from 'browser-sync';
-import eslint   from 'eslint';
 import gulp     from 'gulp';
 import panini   from 'panini';
 import rimraf   from 'rimraf';
@@ -92,7 +91,6 @@ function sass() {
     .pipe(gulp.dest(PATHS.dist + '/assets/css'))
     .pipe(browser.reload({ stream: true }));
 }
-
 
 // Linter to lint es6 code
 function jsLint() {
