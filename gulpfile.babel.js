@@ -3,6 +3,7 @@
 import plugins  from 'gulp-load-plugins';
 import yargs    from 'yargs';
 import browser  from 'browser-sync';
+import eslint   from 'eslint';
 import gulp     from 'gulp';
 import panini   from 'panini';
 import rimraf   from 'rimraf';
@@ -92,6 +93,15 @@ function sass() {
     .pipe(browser.reload({ stream: true }));
 }
 
+
+// Linter to lint es6 code
+function jsLint() {
+  return gulp.src('assets/js/**/*.js')
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.eslint.failOnError());
+}
+
 // Combine JavaScript into one file
 // In production, the file is minified
 function javascript() {
@@ -133,10 +143,10 @@ function reload(done) {
 // Watch for changes to static assets, pages, Sass, and JavaScript
 function watch() {
   gulp.watch(PATHS.assets, copy);
-  gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, browser.reload));
-  gulp.watch('src/{layouts,partials}/**/*.html').on('all', gulp.series(resetPages, pages, browser.reload));
-  gulp.watch('src/assets/scss/**/*.scss').on('all', gulp.series(sass, browser.reload));
-  gulp.watch('src/assets/es6/**/*.js').on('all', gulp.series(javascript, browser.reload));
-  gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
-  gulp.watch('src/styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
+  gulp.watch('pages/**/*.html').on('all', gulp.series(pages, browser.reload));
+  gulp.watch('{layouts,partials}/**/*.html').on('all', gulp.series(resetPages, pages, browser.reload));
+  gulp.watch('assets/scss/**/*.scss').on('all', gulp.series(sass, browser.reload));
+  gulp.watch('assets/js/**/*.js').on('all', gulp.series(jsLint, javascript, browser.reload));
+  gulp.watch('assets/img/**/*').on('all', gulp.series(images, browser.reload));
+  gulp.watch('styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
 }

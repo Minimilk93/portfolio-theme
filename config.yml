@@ -58,5 +58,5 @@ PATHS:
     - "bower_components/foundation-sites/js/foundation.tooltip.js"
     - "bower_components/foundation-sites/js/foundation.zf.responsiveAccordionTabs.js"
     # Paths to your own project code are here
-    - "assets/es6/!(app).js"
-    - "assets/es6/app.js"
+    - "assets/js/!(app).js"
+    - "assets/js/app.js"
