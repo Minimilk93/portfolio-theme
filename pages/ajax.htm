@@ -26,19 +26,11 @@ function onTest()
 }
 ?>
 ==
-<div class="jumbotron title-js">
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <h1>AJAX framework</h1>
-                <p>This built-in JavaScript framework provides simple but powerful AJAX capabilities. Check out the calculator example below.</p>
-            </div>
-        </div>
-    </div>
+<div class="row">
+    <h1>AJAX framework</h1>
+    <p>This built-in JavaScript framework provides simple but powerful AJAX capabilities. Check out the calculator example below.</p>
 </div>
-
-<div class="container">
-
+<div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Calculator</h3>
@@ -60,14 +52,13 @@ function onTest()
             {% partial "calcresult" %}
         </div>
     </div>
-
-</div>
+</div>  
 
 <!-- Page Explanation -->
-<div class="container">{% partial "explain/ajax.htm" %}</div>
+<div class="row">{% partial "explain/ajax.htm" %}</div>
 
 <br />
 
-<div class="text-center">
+<div class="row">
     <p><a href="{{ 'plugins'|page }}" class="btn btn-lg btn-default">Continue to Plugin components</a></p>
 </div>
