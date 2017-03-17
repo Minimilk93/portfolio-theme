@@ -32,7 +32,10 @@ description = "Default layout"
         </footer>
 
         <!-- Scripts -->
-        <script src="{{ 'dist/assets/js/app.js'|theme }}"></script>
+        <script src="{{ 'bower_components/jquery/dist/jquery.js'|theme }}"></script>
+        <script src="{{ 'bower_components/what-input/dist/what-input.js'|theme }}"></script>
+        <script src="{{ 'bower_components/foundation-sites/dist/js/foundation.js'|theme }}"></script>
+        <script src="{{ 'dist/assets/js/app.bundle.js'|theme }}"></script>
         {% framework extras %}
         {% scripts %}
 

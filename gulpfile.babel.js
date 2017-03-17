@@ -26,7 +26,7 @@ function loadConfig() {
 
 // Build the "dist" folder by running all of the below tasks
 gulp.task('build',
- gulp.series(clean, gulp.parallel(sass, javascript, images, copy)));
+ gulp.series(clean, gulp.parallel(sass, images, copy)));
 
 // Build the site, run the server, and watch for file changes
 gulp.task('default',
@@ -92,26 +92,18 @@ function sass() {
     .pipe(browser.reload({ stream: true }));
 }
 
+function webpack() {
+  return gulp.src('assets/js/entry.js')
+    .pipe($.webpack( require('./webpack.config.js') ))
+    .pipe(gulp.dest(PATHS.dist + '/assets/js/'));
+}
+
 // Linter to lint es6 code
 function jsLint() {
   return gulp.src('assets/js/**/*.js')
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.eslint.failOnError());
-}
-
-// Combine JavaScript into one file
-// In production, the file is minified
-function javascript() {
-  return gulp.src(PATHS.javascript)
-    .pipe($.sourcemaps.init())
-    .pipe($.babel({ignore: ['what-input.js']}))
-    .pipe($.concat('app.js'))
-    .pipe($.if(PRODUCTION, $.uglify()
-      .on('error', e => { console.log(e); })
-    ))
-    .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
-    .pipe(gulp.dest(PATHS.dist + '/assets/js'));
 }
 
 // Copy images to the "dist" folder
@@ -144,7 +136,7 @@ function watch() {
   gulp.watch('pages/**/*.html').on('all', gulp.series(pages, browser.reload));
   gulp.watch('{layouts,partials}/**/*.html').on('all', gulp.series(resetPages, pages, browser.reload));
   gulp.watch('assets/scss/**/*.scss').on('all', gulp.series(sass, browser.reload));
-  gulp.watch('assets/js/**/*.js').on('all', gulp.series(jsLint, javascript, browser.reload));
+  gulp.watch('assets/js/**/*.js').on('all', gulp.series(jsLint, webpack, browser.reload));
   gulp.watch('assets/img/**/*').on('all', gulp.series(images, browser.reload));
   gulp.watch('styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
 }
